@@ -44,7 +44,6 @@
         <button onclick="sair()">Sair</button>
     </div>
 
-    <!-- SECÇÃO EXCLUSIVA PARA ADMINS E VENDEDORES -->
     <div id="secaoUsuarios">
         <h2 class="secao-titulo">Gestão de Utilizadores</h2>
         <fieldset>
@@ -66,7 +65,6 @@
         <ul id="listaUsuarios"></ul>
     </div>
 
-    <!-- SECÇÃO VISÍVEL PARA TODOS (INCLUINDO CLIENTES) -->
     <div id="secaoCarros">
         <h2 class="secao-titulo">Catálogo de Carros</h2>
         <button onclick="carregarCarros()" style="background-color: #17a2b8; margin-bottom: 15px;">Atualizar Catálogo</button>
@@ -77,7 +75,7 @@
 
 <script>
     const API_USUARIOS = 'http://localhost:8080/usuarios';
-    const API_CARROS = 'http://localhost:8080/carros'; // Baseado no CarroController existente
+    const API_CARROS = 'http://localhost:8080/carros';
     
     let sessaoAtual = null;
 
@@ -112,15 +110,14 @@
                 
                 document.getElementById('infoUsuarioLogado').innerText = `Logado como: ${sessaoAtual.nome} (${sessaoAtual.cargo})`;
                 
-                // Lógica de Permissão Visual
                 if (sessaoAtual.cargo === 'CLIENTE') {
-                    document.getElementById('secaoUsuarios').classList.add('escondido'); // Esconde CRUD de utilizadores
+                    document.getElementById('secaoUsuarios').classList.add('escondido');
                 } else {
-                    document.getElementById('secaoUsuarios').classList.remove('escondido'); // Mostra CRUD para Admin/Vendedor
+                    document.getElementById('secaoUsuarios').classList.remove('escondido');
                     carregarUsuarios(); 
                 }
 
-                carregarCarros(); // Todos podem ver os carros
+                carregarCarros();
             } else {
                 const erro = await resposta.text();
                 alert('Erro ao entrar: ' + erro);
@@ -168,7 +165,6 @@
 
             carros.forEach(carro => {
                 const li = document.createElement('li');
-                // Ajuste as propriedades (marca, modelo, preco) conforme os atributos da sua classe Carro.java
                 const detalhes = `${carro.marca || 'Marca'} ${carro.modelo || 'Modelo'} - Ano: ${carro.ano || 'N/A'}`;
                 li.innerHTML = `<span>🚙 <strong>ID ${carro.id}:</strong> ${detalhes}</span>`;
                 lista.appendChild(li);
