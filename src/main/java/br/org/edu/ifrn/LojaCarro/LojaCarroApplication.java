@@ -20,7 +20,7 @@ public class LojaCarroApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		if (usuarioRepository.count() == 0) {
+		if (usuarioRepository.findByEmail("admin@lojacarro.com").isEmpty()) {
 			Usuario adminGeral = new Usuario();
 			adminGeral.setNome("Administrador Geral");
 			adminGeral.setEmail("admin@lojacarro.com");
@@ -30,7 +30,7 @@ public class LojaCarroApplication implements CommandLineRunner {
 			usuarioRepository.save(adminGeral);
 
 			System.out.println("=========================================================");
-			System.out.println("Administrador Geral criado com sucesso!");
+			System.out.println("Administrador Geral recriado com sucesso!");
 			System.out.println("E-mail: admin@lojacarro.com");
 			System.out.println("Senha: admin123");
 			System.out.println("=========================================================");

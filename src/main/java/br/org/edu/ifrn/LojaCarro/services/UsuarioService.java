@@ -67,6 +67,11 @@ public class UsuarioService {
             throw new UsuarioException("Erro: Apenas administradores podem excluir usuários.");
         }
 
+        if (id.equals(idUsuarioLogado)) {
+            log.warn("Data: {} | Ação: Tentativa de autoexclusão bloqueada | Autor ID: {}", data, idUsuarioLogado);
+            throw new UsuarioException("Erro: Você não pode excluir a sua própria conta.");
+        }
+
         Usuario usuario = buscarPorId(id);
         repository.delete(usuario);
 
